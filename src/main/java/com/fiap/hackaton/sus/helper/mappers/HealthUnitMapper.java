@@ -2,6 +2,7 @@ package com.fiap.hackaton.sus.helper.mappers;
 
 import com.fiap.hackaton.sus.helper.dtos.HealthUnitRequestDTO;
 import com.fiap.hackaton.sus.helper.dtos.HealthUnitResponseDTO;
+import com.fiap.hackaton.sus.helper.entities.AddressEntity;
 import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -30,8 +31,16 @@ public class HealthUnitMapper {
     }
 
     public void copyToEntity(HealthUnitRequestDTO requestDTO, HealthUnitEntity entity) {
+        AddressEntity currentAddress = entity.getAddressId();
         modelMapper.map(requestDTO, entity);
-        entity.setAddressId(addressMapper.toEntity(requestDTO.getAddress()));
+
+        if (currentAddress == null) {
+            entity.setAddressId(addressMapper.toEntity(requestDTO.getAddress()));
+            return;
+        }
+
+        entity.setAddressId(currentAddress);
+        addressMapper.updateEntityFromRequest(requestDTO.getAddress(), currentAddress);
     }
 
     public List<HealthUnitResponseDTO> toListResponse(List<HealthUnitEntity> listEntity) {

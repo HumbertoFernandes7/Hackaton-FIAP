@@ -33,7 +33,7 @@ public class HealthUnitEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private AddressEntity addressId;
 
     @Column(nullable = false, precision = 18, scale = 15)
