@@ -2,9 +2,9 @@ package com.fiap.hackaton.sus.helper.controllers;
 
 import com.fiap.hackaton.sus.helper.dtos.HealthUnitRequestDTO;
 import com.fiap.hackaton.sus.helper.dtos.HealthUnitResponseDTO;
-import com.fiap.hackaton.sus.helper.entities.healthUnitEntity;
+import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import com.fiap.hackaton.sus.helper.mappers.HealthUnitMapper;
-import com.fiap.hackaton.sus.helper.services.healthUnitService;
+import com.fiap.hackaton.sus.helper.services.HealthUnitService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,29 +26,27 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class HealthUnitController {
 
-    private final healthUnitService healthUnitService;
+    private final HealthUnitService healthUnitService;
     private final HealthUnitMapper healthUnitMapper;
 
     @PostMapping
     public ResponseEntity<HealthUnitResponseDTO> create(@Valid @RequestBody HealthUnitRequestDTO requestDTO) {
-        healthUnitEntity entity = healthUnitMapper.toEntity(requestDTO);
-        healthUnitEntity savedEntity = healthUnitService.create(entity);
+        HealthUnitEntity entity = healthUnitMapper.toEntity(requestDTO);
+        HealthUnitEntity savedEntity = healthUnitService.create(entity);
         HealthUnitResponseDTO responseDTO = healthUnitMapper.toResponse(savedEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping
     public ResponseEntity<List<HealthUnitResponseDTO>> findAll() {
-        List<HealthUnitResponseDTO> response = healthUnitService.findAll()
-                .stream()
-                .map(healthUnitMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(response);
+        List<HealthUnitEntity> listEntity = healthUnitService.findAll();
+        List<HealthUnitResponseDTO> listResponse = healthUnitMapper.toListResponse(listEntity);
+        return ResponseEntity.ok(listResponse);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<HealthUnitResponseDTO> findById(@PathVariable UUID id) {
-        healthUnitEntity entity = healthUnitService.findById(id);
+        HealthUnitEntity entity = healthUnitService.findById(id);
         HealthUnitResponseDTO response = healthUnitMapper.toResponse(entity);
         return ResponseEntity.ok(response);
     }
@@ -58,9 +56,9 @@ public class HealthUnitController {
             @PathVariable UUID id,
             @Valid @RequestBody HealthUnitRequestDTO requestDTO
     ) {
-        healthUnitEntity entity = healthUnitService.findById(id);
+        HealthUnitEntity entity = healthUnitService.findById(id);
         healthUnitMapper.copyToEntity(requestDTO, entity);
-        healthUnitEntity updatedEntity = healthUnitService.update(entity);
+        HealthUnitEntity updatedEntity = healthUnitService.update(entity);
         HealthUnitResponseDTO response = healthUnitMapper.toResponse(updatedEntity);
         return ResponseEntity.ok(response);
     }
