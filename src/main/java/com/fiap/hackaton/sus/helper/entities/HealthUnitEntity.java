@@ -8,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.UUID;
 
 @Getter
@@ -17,13 +16,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_health_unit")
-public class healthUnitEntity {
+public class HealthUnitEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UnitType unitType;
 
     @Column(nullable = false)

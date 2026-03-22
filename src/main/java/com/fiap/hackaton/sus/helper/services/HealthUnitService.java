@@ -1,8 +1,8 @@
 package com.fiap.hackaton.sus.helper.services;
 
-import com.fiap.hackaton.sus.helper.entities.healthUnitEntity;
+import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import com.fiap.hackaton.sus.helper.repositories.AddressEntityRepository;
-import com.fiap.hackaton.sus.helper.repositories.healthUnitRepository;
+import com.fiap.hackaton.sus.helper.repositories.HealthUnitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,29 +13,29 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class healthUnitService {
+public class HealthUnitService {
 
-    private final healthUnitRepository healthUnitRepository;
+    private final HealthUnitRepository healthUnitRepository;
     private final AddressEntityRepository addressEntityRepository;
 
     @Transactional
-    public healthUnitEntity create(healthUnitEntity entity) {
+    public HealthUnitEntity create(HealthUnitEntity entity) {
         addressEntityRepository.save(entity.getAddressId());
         return healthUnitRepository.save(entity);
     }
 
     @Transactional(readOnly = true)
-    public List<healthUnitEntity> findAll() {
+    public List<HealthUnitEntity> findAll() {
         return healthUnitRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public healthUnitEntity findById(UUID id) {
+    public HealthUnitEntity findById(UUID id) {
         return getByIdOrThrow(id);
     }
 
     @Transactional
-    public healthUnitEntity update(healthUnitEntity entity) {
+    public HealthUnitEntity update(HealthUnitEntity entity) {
         getByIdOrThrow(entity.getId());
         addressEntityRepository.save(entity.getAddressId());
         return healthUnitRepository.save(entity);
@@ -43,11 +43,11 @@ public class healthUnitService {
 
     @Transactional
     public void delete(UUID id) {
-        healthUnitEntity entity = getByIdOrThrow(id);
+        HealthUnitEntity entity = getByIdOrThrow(id);
         healthUnitRepository.delete(entity);
     }
 
-    private healthUnitEntity getByIdOrThrow(UUID id) {
+    private HealthUnitEntity getByIdOrThrow(UUID id) {
         return healthUnitRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Health unit not found for id: " + id));
     }

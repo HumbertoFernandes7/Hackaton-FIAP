@@ -42,8 +42,11 @@ public class HealthUnitRequestDTO {
     @DecimalMax(value = "180.0", message = "Longitude must be <= 180")
     private BigDecimal longitude;
 
-    private boolean isActive;
-    private boolean open24h;
+    @NotNull(message = "Active is required")
+    private Boolean active;
+
+    @NotNull(message = "Open 24h is required")
+    private Boolean open24h;
 
     @Positive(message = "Max capacity must be greater than zero")
     private int maxCapacity;
