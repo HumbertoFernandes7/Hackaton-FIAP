@@ -2,6 +2,7 @@ package com.fiap.hackaton.sus.helper.dtos;
 
 import com.fiap.hackaton.sus.helper.enums.UnitType;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -48,6 +50,18 @@ public class HealthUnitRequestDTO {
     @NotNull(message = "Open 24h is required")
     private Boolean open24h;
 
+    private LocalTime openTime;
+
+    private LocalTime closeTime;
+
     @Positive(message = "Max capacity must be greater than zero")
     private int maxCapacity;
+
+    @AssertTrue(message = "Open time and close time are required when open24h is false")
+    public boolean isOperatingHoursValid() {
+        if (open24h == null || open24h) {
+            return true;
+        }
+        return openTime != null && closeTime != null;
+    }
 }

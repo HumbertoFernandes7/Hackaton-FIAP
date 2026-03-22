@@ -1,6 +1,7 @@
 package com.fiap.hackaton.sus.helper.services;
 
 import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
+import com.fiap.hackaton.sus.helper.exceptions.BadRequestBusinessException;
 import com.fiap.hackaton.sus.helper.repositories.AddressEntityRepository;
 import com.fiap.hackaton.sus.helper.repositories.HealthUnitRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +21,7 @@ public class HealthUnitService {
 
     @Transactional
     public HealthUnitEntity create(HealthUnitEntity entity) {
+        validateOperatingHours(entity);
         addressEntityRepository.save(entity.getAddressId());
         return healthUnitRepository.save(entity);
     }
@@ -37,6 +39,7 @@ public class HealthUnitService {
     @Transactional
     public HealthUnitEntity update(HealthUnitEntity entity) {
         getByIdOrThrow(entity.getId());
+        validateOperatingHours(entity);
         addressEntityRepository.save(entity.getAddressId());
         return healthUnitRepository.save(entity);
     }
@@ -50,5 +53,11 @@ public class HealthUnitService {
     private HealthUnitEntity getByIdOrThrow(UUID id) {
         return healthUnitRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Health unit not found for id: " + id));
+    }
+
+    private void validateOperatingHours(HealthUnitEntity entity) {
+        if (!entity.isOpen24h() && (entity.getOpenTime() == null || entity.getCloseTime() == null)) {
+            throw new BadRequestBusinessException("Open time and close time are required when open24h is false");
+        }
     }
 }

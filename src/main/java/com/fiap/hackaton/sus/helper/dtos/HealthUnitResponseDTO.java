@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -24,6 +25,8 @@ public class HealthUnitResponseDTO {
     private BigDecimal longitude;
     private boolean isActive;
     private boolean open24h;
+    private LocalTime openTime;
+    private LocalTime closeTime;
     private int maxCapacity;
     private Instant createdAt;
     private Instant updatedAt;
