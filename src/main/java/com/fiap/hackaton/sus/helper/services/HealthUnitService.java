@@ -2,9 +2,9 @@ package com.fiap.hackaton.sus.helper.services;
 
 import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import com.fiap.hackaton.sus.helper.exceptions.BadRequestBusinessException;
+import com.fiap.hackaton.sus.helper.exceptions.NotFoundBusinessException;
 import com.fiap.hackaton.sus.helper.repositories.AddressEntityRepository;
 import com.fiap.hackaton.sus.helper.repositories.HealthUnitRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +52,7 @@ public class HealthUnitService {
 
     private HealthUnitEntity getByIdOrThrow(UUID id) {
         return healthUnitRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Health unit not found for id: " + id));
+                .orElseThrow(() -> new NotFoundBusinessException("Health unit not found for id: " + id));
     }
 
     private void validateOperatingHours(HealthUnitEntity entity) {
