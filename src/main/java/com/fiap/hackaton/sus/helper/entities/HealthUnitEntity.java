@@ -4,10 +4,13 @@ import com.fiap.hackaton.sus.helper.enums.UnitType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -19,6 +22,7 @@ import java.util.UUID;
 public class HealthUnitEntity {
 
     @Id
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
@@ -26,16 +30,16 @@ public class HealthUnitEntity {
     @Column(nullable = false)
     private UnitType unitType;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @OneToOne
     private AddressEntity addressId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 18, scale = 15)
     private BigDecimal latitude;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 18, scale = 15)
     private BigDecimal longitude;
 
     @Column(nullable = false)
@@ -43,6 +47,12 @@ public class HealthUnitEntity {
 
     @Column(nullable = false)
     private boolean open24h;
+
+    @Column(nullable = true)
+    private LocalTime openTime;
+
+    @Column(nullable = true)
+    private LocalTime closeTime;
 
     @Column(nullable = false)
     private int maxCapacity;
