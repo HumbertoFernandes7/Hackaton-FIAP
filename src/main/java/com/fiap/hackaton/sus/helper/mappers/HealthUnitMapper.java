@@ -26,9 +26,8 @@ public class HealthUnitMapper {
         return responseDTO;
     }
 
-    public void updateEntityFromRequest(HealthUnitRequestDTO requestDTO, healthUnitEntity entity) {
+    public void copyToEntity(HealthUnitRequestDTO requestDTO, healthUnitEntity entity) {
         modelMapper.map(requestDTO, entity);
         entity.setAddressId(addressMapper.toEntity(requestDTO.getAddress()));
     }
-
 }
