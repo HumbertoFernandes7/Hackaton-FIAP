@@ -1,4 +1,4 @@
-package com.fiap.hackaton.sus_helper;
+package com.fiap.hackaton.sus.helper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

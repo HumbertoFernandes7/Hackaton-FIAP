@@ -1,4 +1,4 @@
-package com.fiap.hackaton.sus_helper;
+package com.fiap.hackaton.sus.helper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
