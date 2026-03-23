@@ -15,9 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class WaitingTimeRequestDTO {
 
-    @NotNull(message = "Health unit id is required")
-    private UUID healthUnitId;
-
     @PositiveOrZero(message = "Waiting time minutes must be greater than or equal to zero")
     private int waitingTimeMinutes;
 

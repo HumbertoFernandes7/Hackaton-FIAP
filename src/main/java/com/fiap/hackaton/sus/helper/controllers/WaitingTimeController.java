@@ -32,9 +32,13 @@ public class WaitingTimeController {
     private final HealthUnitService healthUnitService;
     private final WaitingTimeMapper waitingTimeMapper;
 
-    @PostMapping
-    public ResponseEntity<WaitingTimeResponseDTO> create(@Valid @RequestBody WaitingTimeRequestDTO requestDTO) {
-        WaitingTimeEntity entity = waitingTimeMapper.toEntity(requestDTO);
+    @PostMapping("/{healthUnitId}")
+    public ResponseEntity<WaitingTimeResponseDTO> create(
+            @Valid @RequestBody WaitingTimeRequestDTO requestDTO,
+            @PathVariable UUID healthUnitId) {
+
+        HealthUnitEntity healthUnitEntity = healthUnitService.findById(healthUnitId);
+        WaitingTimeEntity entity = waitingTimeMapper.toEntity(requestDTO, healthUnitEntity);
         WaitingTimeEntity savedEntity = waitingTimeService.create(entity);
         WaitingTimeResponseDTO response = waitingTimeMapper.toResponse(savedEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

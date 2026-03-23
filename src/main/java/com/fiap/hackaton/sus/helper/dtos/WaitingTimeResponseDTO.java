@@ -15,7 +15,7 @@ import java.util.UUID;
 public class WaitingTimeResponseDTO {
 
     private Long id;
-    private UUID healthUnitId;
+    private HealthUnitResponseDTO healthUnitId;
     private int waitingTimeMinutes;
     private int waitingPatients;
     private Instant createdAt;

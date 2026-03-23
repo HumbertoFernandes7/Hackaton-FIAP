@@ -22,12 +22,6 @@ public class WaitingTimeService {
 
     @Transactional
     public WaitingTimeEntity create(WaitingTimeEntity entity) {
-        UUID healthUnitId = validateAndGetHealthUnitId(entity.getHealthUnitId());
-
-        if (waitingTimeRepository.existsByHealthUnitId_Id(healthUnitId)) {
-            throw new BadRequestBusinessException("Waiting time already exists for health unit id: " + healthUnitId);
-        }
-
         return waitingTimeRepository.save(entity);
     }
 
@@ -60,18 +54,5 @@ public class WaitingTimeService {
     private WaitingTimeEntity getByIdOrThrow(Long id) {
         return waitingTimeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundBusinessException("Waiting time not found for id: " + id));
-    }
-
-    private UUID validateAndGetHealthUnitId(HealthUnitEntity healthUnitEntity) {
-        if (healthUnitEntity == null || healthUnitEntity.getId() == null) {
-            throw new BadRequestBusinessException("Health unit id is required");
-        }
-
-        UUID healthUnitId = healthUnitEntity.getId();
-
-        healthUnitRepository.findById(healthUnitId)
-                .orElseThrow(() -> new NotFoundBusinessException("Health unit not found for id: " + healthUnitId));
-
-        return healthUnitId;
     }
 }
