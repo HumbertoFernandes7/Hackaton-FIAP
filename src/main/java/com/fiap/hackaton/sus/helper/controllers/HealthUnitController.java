@@ -4,6 +4,7 @@ import com.fiap.hackaton.sus.helper.dtos.HealthUnitRequestDTO;
 import com.fiap.hackaton.sus.helper.dtos.HealthUnitResponseDTO;
 import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import com.fiap.hackaton.sus.helper.mappers.HealthUnitMapper;
+import com.fiap.hackaton.sus.helper.services.GoogleMapsService;
 import com.fiap.hackaton.sus.helper.services.HealthUnitService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
