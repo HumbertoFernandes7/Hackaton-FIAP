@@ -22,6 +22,9 @@ public class WaitingTimeService {
 
     @Transactional
     public WaitingTimeEntity create(WaitingTimeEntity entity) {
+        if(waitingTimeRepository.existsByHealthUnitId(entity.getHealthUnitId())){
+            throw new BadRequestBusinessException("Waiting time already exists for this health unit");
+        }
         return waitingTimeRepository.save(entity);
     }
 

@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface WaitingTimeRepository extends JpaRepository<WaitingTimeEntity, Long> {
 
+    boolean existsByHealthUnitId(HealthUnitEntity healthUnitEntity);
+
     boolean existsByHealthUnitId_Id(UUID healthUnitId);
 
     WaitingTimeEntity findByHealthUnitId(HealthUnitEntity healthUnitId);
