@@ -5,6 +5,7 @@ import com.fiap.hackaton.sus.helper.exceptions.BadRequestBusinessException;
 import com.fiap.hackaton.sus.helper.exceptions.NotFoundBusinessException;
 import com.fiap.hackaton.sus.helper.repositories.AddressEntityRepository;
 import com.fiap.hackaton.sus.helper.repositories.HealthUnitRepository;
+import com.google.maps.model.GeocodingResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +17,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class HealthUnitService {
 
+    private static final double MAX_KM_RANGE = 10.0;
+
     private final HealthUnitRepository healthUnitRepository;
     private final AddressEntityRepository addressEntityRepository;
+    private final GoogleMapsService googleMapsService;
 
     @Transactional
     public HealthUnitEntity create(HealthUnitEntity entity) {
@@ -59,5 +63,19 @@ public class HealthUnitService {
         if (!entity.isOpen24h() && (entity.getOpenTime() == null || entity.getCloseTime() == null)) {
             throw new BadRequestBusinessException("Open time and close time are required when open24h is false");
         }
+    }
+
+    public List<HealthUnitEntity> getBestByLocation(String location) {
+
+        GeocodingResult[] coordinates = googleMapsService.getCoordinates(location);
+
+        if (coordinates == null || coordinates.length == 0) {
+            throw new BadRequestBusinessException("Não foi possível localizar o endereço informado");
+        }
+
+        double userLat = coordinates[0].geometry.location.lat;
+        double userLon = coordinates[0].geometry.location.lng;
+
+        return healthUnitRepository.findNearbyUnits(userLat, userLon, MAX_KM_RANGE);
     }
 }
