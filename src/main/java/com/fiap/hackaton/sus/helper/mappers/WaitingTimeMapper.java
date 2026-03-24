@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class WaitingTimeMapper {
 
     private final ModelMapper modelMapper;
+    private final HealthUnitMapper healthUnitMapper;
 
     public WaitingTimeEntity toEntity(WaitingTimeRequestDTO waitingTimeRequestDTO, HealthUnitEntity healthUnitEntity) {
         WaitingTimeEntity entity = modelMapper.map(waitingTimeRequestDTO, WaitingTimeEntity.class);

@@ -40,8 +40,8 @@ public class WaitingTimeController {
         HealthUnitEntity healthUnitEntity = healthUnitService.findById(healthUnitId);
         WaitingTimeEntity entity = waitingTimeMapper.toEntity(requestDTO, healthUnitEntity);
         WaitingTimeEntity savedEntity = waitingTimeService.create(entity);
-        WaitingTimeResponseDTO response = waitingTimeMapper.toResponse(savedEntity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(waitingTimeMapper.toResponse(savedEntity));
     }
 
     @GetMapping
