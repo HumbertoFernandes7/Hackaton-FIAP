@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 @Service
@@ -18,6 +21,7 @@ import java.util.UUID;
 public class HealthUnitService {
 
     private static final double MAX_KM_RANGE = 10.0;
+    private static final ZoneId FUSO = ZoneId.of("America/Sao_Paulo");
 
     private final HealthUnitRepository healthUnitRepository;
     private final AddressEntityRepository addressEntityRepository;
@@ -76,6 +80,13 @@ public class HealthUnitService {
         double userLat = coordinates[0].geometry.location.lat;
         double userLon = coordinates[0].geometry.location.lng;
 
-        return healthUnitRepository.findNearbyUnits(userLat, userLon, MAX_KM_RANGE);
+        return filterOpenUnits(healthUnitRepository.findNearbyUnits(userLat, userLon, MAX_KM_RANGE));
+    }
+
+    private List<HealthUnitEntity> filterOpenUnits(List<HealthUnitEntity> nearbyUnits){
+        LocalTime now = LocalTime.now(FUSO);
+       return nearbyUnits.stream()
+                .filter(unit -> unit.isOpen24h() || (unit.getOpenTime().isBefore(now)  && unit.getCloseTime().isAfter(now)))
+                .toList();
     }
 }
