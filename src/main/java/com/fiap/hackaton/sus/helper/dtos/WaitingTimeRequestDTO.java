@@ -7,19 +7,45 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class WaitingTimeRequestDTO {
 
-    @NotNull(message = "Waiting time minutes cannot be null")
-    @PositiveOrZero(message = "Waiting time minutes must be greater than or equal to zero")
-    private int waitingTimeMinutes;
+    @NotNull(message = "Overall waiting time minutes cannot be null")
+    @PositiveOrZero(message = "Overall waiting time minutes must be greater than or equal to zero")
+    private Integer waitingTimeMinutes;
 
-    @NotNull(message = "Waiting patients cannot be null")
-    @PositiveOrZero(message = "Waiting patients must be greater than or equal to zero")
-    private int waitingPatients;
+    @NotNull(message = "Blue patients cannot be null")
+    @PositiveOrZero(message = "Blue patients must be greater than or equal to zero")
+    private Integer bluePatients;
+
+    @NotNull(message = "Green patients cannot be null")
+    @PositiveOrZero(message = "Green patients must be greater than or equal to zero")
+    private Integer greenPatients;
+
+    @NotNull(message = "Yellow patients cannot be null")
+    @PositiveOrZero(message = "Yellow patients must be greater than or equal to zero")
+    private Integer yellowPatients;
+
+    @NotNull(message = "Red patients cannot be null")
+    @PositiveOrZero(message = "Red patients must be greater than or equal to zero")
+    private Integer redPatients;
+
+    @NotNull(message = "Blue waiting time cannot be null")
+    @PositiveOrZero(message = "Blue waiting time must be greater than or equal to zero")
+    private Integer blueWaitingTime;
+
+    @NotNull(message = "Green waiting time cannot be null")
+    @PositiveOrZero(message = "Green waiting time must be greater than or equal to zero")
+    private Integer greenWaitingTime;
+
+    @NotNull(message = "Yellow waiting time cannot be null")
+    @PositiveOrZero(message = "Yellow waiting time must be greater than or equal to zero")
+    private Integer yellowWaitingTime;
+
+    @NotNull(message = "Red waiting time cannot be null")
+    @PositiveOrZero(message = "Red waiting time must be greater than or equal to zero")
+    private Integer redWaitingTime;
 }
