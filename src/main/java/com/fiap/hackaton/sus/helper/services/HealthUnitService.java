@@ -86,7 +86,7 @@ public class HealthUnitService {
     private List<HealthUnitEntity> filterOpenUnits(List<HealthUnitEntity> nearbyUnits){
         LocalTime now = LocalTime.now(FUSO);
        return nearbyUnits.stream()
-                .filter(unit -> unit.isOpen24h() || (unit.getOpenTime().isBefore(now)  && unit.getCloseTime().isAfter(now)))
+                .filter(unit -> unit.isOpen24h() || (unit.getOpenTime().isBefore(now) && unit.getCloseTime().isAfter(now)) && unit.isActive())
                 .toList();
     }
 }
