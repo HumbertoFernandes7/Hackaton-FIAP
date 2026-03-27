@@ -6,6 +6,7 @@ import com.fiap.hackaton.sus.helper.exceptions.NotFoundBusinessException;
 import com.fiap.hackaton.sus.helper.repositories.AddressEntityRepository;
 import com.fiap.hackaton.sus.helper.repositories.HealthUnitRepository;
 import com.google.maps.model.GeocodingResult;
+import dev.langchain4j.agent.tool.Tool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
