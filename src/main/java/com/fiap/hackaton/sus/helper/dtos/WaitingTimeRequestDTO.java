@@ -9,8 +9,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class WaitingTimeRequestDTO {
 
     @NotNull(message = "Overall waiting time minutes cannot be null")
