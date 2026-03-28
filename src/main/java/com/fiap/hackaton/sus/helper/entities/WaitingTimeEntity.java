@@ -33,7 +33,35 @@ public class WaitingTimeEntity {
 
     @PositiveOrZero
     @Column(nullable = false)
-    private int waitingPatients;
+    private int bluePatients;
+
+    @PositiveOrZero
+    @Column(nullable = false)
+    private int greenPatients;
+
+    @PositiveOrZero
+    @Column(nullable = false)
+    private int yellowPatients;
+
+    @PositiveOrZero
+    @Column(nullable = false)
+    private int redPatients;
+
+    @PositiveOrZero
+    @Column(nullable = false)
+    private int blueWaitingTime;
+
+    @PositiveOrZero
+    @Column(nullable = false)
+    private int greenWaitingTime;
+
+    @PositiveOrZero
+    @Column(nullable = false)
+    private int yellowWaitingTime;
+
+    @PositiveOrZero
+    @Column(nullable = false)
+    private int redWaitingTime;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

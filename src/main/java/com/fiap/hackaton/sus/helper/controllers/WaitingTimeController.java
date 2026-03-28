@@ -40,8 +40,8 @@ public class WaitingTimeController {
         HealthUnitEntity healthUnitEntity = healthUnitService.findById(healthUnitId);
         WaitingTimeEntity entity = waitingTimeMapper.toEntity(requestDTO, healthUnitEntity);
         WaitingTimeEntity savedEntity = waitingTimeService.create(entity);
-        WaitingTimeResponseDTO response = waitingTimeMapper.toResponse(savedEntity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(waitingTimeMapper.toResponse(savedEntity));
     }
 
     @GetMapping
@@ -57,6 +57,15 @@ public class WaitingTimeController {
         WaitingTimeResponseDTO response = waitingTimeMapper.toResponse(entity);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/unit-id/{healthUnitId}")
+    public ResponseEntity<WaitingTimeResponseDTO> findByHealthUnitId(@PathVariable UUID healthUnitId) {
+        HealthUnitEntity healthUnitEntity = healthUnitService.findById(healthUnitId);
+        WaitingTimeEntity entities = waitingTimeService.findByHealthUnitId(healthUnitEntity);
+        WaitingTimeResponseDTO response = waitingTimeMapper.toResponse(entities);
+        return ResponseEntity.ok(response);
+    }
+
 
     @PutMapping("/{healthUnitId}")
     public ResponseEntity<WaitingTimeResponseDTO> updateByHealthUnit(
