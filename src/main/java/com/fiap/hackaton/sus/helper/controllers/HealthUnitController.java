@@ -4,20 +4,12 @@ import com.fiap.hackaton.sus.helper.dtos.HealthUnitRequestDTO;
 import com.fiap.hackaton.sus.helper.dtos.HealthUnitResponseDTO;
 import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import com.fiap.hackaton.sus.helper.mappers.HealthUnitMapper;
-import com.fiap.hackaton.sus.helper.services.GoogleMapsService;
 import com.fiap.hackaton.sus.helper.services.HealthUnitService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +28,12 @@ public class HealthUnitController {
         HealthUnitEntity savedEntity = healthUnitService.create(entity);
         HealthUnitResponseDTO responseDTO = healthUnitMapper.toResponse(savedEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    }
+
+    @GetMapping("/best-by-user-location")
+    public ResponseEntity<List<HealthUnitResponseDTO>> getBestByUserLocation(@RequestParam String userLocation) {
+        List<HealthUnitEntity> bestByLocation = healthUnitService.getBestByLocation(userLocation);
+        return ResponseEntity.ok(healthUnitMapper.toListResponse(bestByLocation));
     }
 
     @GetMapping

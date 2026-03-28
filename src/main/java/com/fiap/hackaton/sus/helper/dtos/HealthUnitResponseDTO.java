@@ -21,8 +21,6 @@ public class HealthUnitResponseDTO {
     private UnitType unitType;
     private String name;
     private AddressResponseDTO address;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
     private boolean isActive;
     private boolean open24h;
     private LocalTime openTime;

@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface WaitingTimeRepository extends JpaRepository<WaitingTimeEntity, Long> {
 
     boolean existsByHealthUnitId(HealthUnitEntity healthUnitEntity);
-
+    
     Optional<WaitingTimeEntity> findByHealthUnitId(HealthUnitEntity healthUnitId);
 }
