@@ -3,6 +3,7 @@ package com.fiap.hackaton.sus.helper.tools;
 
 import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import com.fiap.hackaton.sus.helper.entities.WaitingTimeEntity;
+import com.fiap.hackaton.sus.helper.services.GoogleMapsService;
 import com.fiap.hackaton.sus.helper.services.HealthUnitService;
 import com.fiap.hackaton.sus.helper.services.WaitingTimeService;
 import dev.langchain4j.agent.tool.Tool;
@@ -18,6 +19,7 @@ public class AssistantAiTools {
 
     private final HealthUnitService healthUnitService;
     private final WaitingTimeService waitingTimeService;
+    private final GoogleMapsService googleMapsService;
 
     @Tool("Encontrar as unidades mais próximas")
     public List<HealthUnitEntity> getBestByLocation(String location){
@@ -27,5 +29,10 @@ public class AssistantAiTools {
     @Tool("Encontrar o tempo de espera das unidades")
     public List<WaitingTimeEntity> getWaitingTimesByHealthUnitIds(List<UUID> healthUnitIds){
         return waitingTimeService.findWaitingTimesByHealthUnitIds(healthUnitIds);
+    }
+
+    @Tool("Encontrar o tempo de locomoção do usuário até a unidade")
+    public String getTravelDuration(String origin, String destination){
+        return googleMapsService.calculateTravelTime(origin, destination);
     }
 }
