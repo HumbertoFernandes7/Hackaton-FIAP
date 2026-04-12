@@ -17,11 +17,15 @@ public class AssistantConfig {
     @Value("${gemini.model}")
     private String geminiModel;
 
+    @Value("${gemini.temperature}")
+    private double geminiTemperature;
+
     @Bean
     public GoogleAiGeminiChatModel googleAiGeminiChatModel() {
         return GoogleAiGeminiChatModel.builder()
                 .apiKey(geminiApiKey)
                 .modelName(geminiModel)
+                .temperature(geminiTemperature)
                 .build();
     }
 

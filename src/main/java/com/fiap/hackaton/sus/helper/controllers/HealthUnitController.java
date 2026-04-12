@@ -4,6 +4,7 @@ import com.fiap.hackaton.sus.helper.dtos.HealthUnitRequestDTO;
 import com.fiap.hackaton.sus.helper.dtos.HealthUnitResponseDTO;
 import com.fiap.hackaton.sus.helper.entities.HealthUnitEntity;
 import com.fiap.hackaton.sus.helper.mappers.HealthUnitMapper;
+import com.fiap.hackaton.sus.helper.services.GoogleMapsService;
 import com.fiap.hackaton.sus.helper.services.HealthUnitService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class HealthUnitController {
 
     private final HealthUnitService healthUnitService;
     private final HealthUnitMapper healthUnitMapper;
+    private final GoogleMapsService googleMapsService;
 
     @PostMapping
     public ResponseEntity<HealthUnitResponseDTO> create(@Valid @RequestBody HealthUnitRequestDTO requestDTO) {
@@ -48,6 +50,13 @@ public class HealthUnitController {
         HealthUnitEntity entity = healthUnitService.findById(id);
         HealthUnitResponseDTO response = healthUnitMapper.toResponse(entity);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/travel")
+    public ResponseEntity<String> getTimeToTravel(@RequestParam String origin,
+                                                  @RequestParam String destination,
+                                                  @RequestParam String healthUnitName){
+        return ResponseEntity.ok(googleMapsService.calculateTravelTime(origin, destination, healthUnitName));
     }
 
     @PutMapping("/{id}")

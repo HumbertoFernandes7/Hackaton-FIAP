@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +42,11 @@ public class WaitingTimeService {
     public WaitingTimeEntity findByHealthUnitId(HealthUnitEntity healthUnitId) {
         return waitingTimeRepository.findByHealthUnitId(healthUnitId)
                 .orElseThrow(() -> new NotFoundBusinessException("Waiting time not found for this health unit"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<WaitingTimeEntity> findWaitingTimesByHealthUnitIds(List<UUID> healthUnitIds) {
+        return waitingTimeRepository.findAllByHealthUnitId_IdIn(healthUnitIds);
     }
 
     @Transactional

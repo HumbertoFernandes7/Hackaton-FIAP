@@ -9,6 +9,8 @@ import com.google.maps.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 @RequiredArgsConstructor
 public class GoogleMapsService {
@@ -23,43 +25,40 @@ public class GoogleMapsService {
         }
     }
 
+    public String calculateTravelTime(String origin, String destination, String healthUnitName) {
+        if (origin == null || origin.isBlank()) {
+            throw new BusinessException("A origem deve ser informada para calcular o tempo de deslocamento.");
+        }
 
-    public DistanceTimeDTO calculateDistanceAndTime(double latOrigem, double longOrigem, double latDestination, double longDestination) {
+        if (destination == null || destination.isBlank()) {
+            throw new BusinessException("O destino deve ser informado para calcular o tempo de deslocamento.");
+        }
 
         try {
-            LatLng origem = new LatLng(latOrigem, longOrigem);
-            LatLng destination = new LatLng(latDestination, longDestination);
-
             DistanceMatrix matrix = DistanceMatrixApi.newRequest(maps)
-                    .origins(origem)
-                    .destinations(destination)
+                    .origins(origin.trim())
+                    .destinations(destination.trim())
                     .mode(TravelMode.DRIVING)
                     .language("pt-BR")
+                    .departureTime(Instant.now())
                     .await();
 
-            // O Google retorna uma matriz. Como mandamos 1 origem e 1 destino,
-            // a resposta que queremos estará na linha 0, elemento 0.
             if (matrix != null && matrix.rows.length > 0 && matrix.rows[0].elements.length > 0) {
                 DistanceMatrixElement element = matrix.rows[0].elements[0];
 
-                if (element.status == DistanceMatrixElementStatus.OK) {
-                    return new DistanceTimeDTO(
-                            element.distance.humanReadable,
-                            element.distance.inMeters,
-                            element.duration.humanReadable,
-                            element.duration.inSeconds
-                    );
-                } else {
-                    throw new BusinessException("Não foi possível traçar uma rota entre as coordenadas. Status: " + element.status);
+                if (element.status == DistanceMatrixElementStatus.OK && element.duration != null) {
+                    System.out.println("Unidade: " + healthUnitName +  " Destino : " + destination + " Tempo de locomoção: " + element.duration.humanReadable);
+                    return "Unidade: " + healthUnitName +  " Destino : " + destination + " Tempo de locomoção: " + element.duration.humanReadable;
                 }
+
+                throw new BusinessException("Não foi possível calcular o tempo de deslocamento. Status: " + element.status);
             }
 
             throw new BusinessException("A API do Google Maps retornou uma matriz vazia.");
-
+        } catch (BusinessException e) {
+            throw e;
         } catch (Exception e) {
-            throw new BusinessException("Erro ao se comunicar com API do Google Maps: " + e);
+            throw new BusinessException("Erro ao se comunicar com API do Google Maps: " + e.getMessage());
         }
-
     }
-
 }
