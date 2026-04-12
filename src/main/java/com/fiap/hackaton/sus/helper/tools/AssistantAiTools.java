@@ -32,7 +32,7 @@ public class AssistantAiTools {
     }
 
     @Tool("Encontrar o tempo de locomoção do usuário até a unidade")
-    public String getTravelDuration(String origin, String destination){
-        return googleMapsService.calculateTravelTime(origin, destination);
+    public String getTravelDuration(String origin, String destination, String healthUnitName){
+        return googleMapsService.calculateTravelTime(origin, destination, healthUnitName);
     }
 }

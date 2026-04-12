@@ -25,7 +25,7 @@ VALUES
     (1023, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'Estrada de Itapecerica', 'Campo Limpo', 1661, '05835-003'),
     (1024, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'Rua Francisco de Paula Quintanilha Ribeiro', 'Jabaquara', 860, '04330-020'),
     (1025, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'Alameda Rodrigo de Brum', 'Ermelino Matarazzo', 1989, '03807-230'),
-    (1026, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'Estrada de Itapecirica da Serra', 'Vila Maracana', 1661, '05835-004'),
+    (1026, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'Hospital campo limpo', 'Vila Maracana', 1661, '05835-004'),
     (1027, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'Av. Deputado Emilio Carlos', 'Vila Nova Cachoeirinha', 3000, '02720-200'),
     (1028, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'R. dos Ingleses', 'Bela Vista', 258, '01329-000'),
     (1029, CURRENT_TIMESTAMP(6), CURRENT_TIMESTAMP(6), 'Av. Dr. Eneas Carvalho de Aguiar', 'Cerqueira Cesar', 255, '05403-000'),
