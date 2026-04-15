@@ -1,0 +1,278 @@
+{
+  "info": {
+    "_postman_id": "6a9f2b7a-e74d-4f95-90a5-1ec70f8ac315",
+    "name": "SUS Helper API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Collection para testar o CRUD de Health Units e Waiting Time."
+  },
+  "item": [
+    {
+      "name": "Health Units",
+      "item": [
+        {
+          "name": "Create Health Unit",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) {",
+                  "    pm.collectionVariables.set('health_unit_id', json.id);",
+                  "  }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unitType\": \"UPA\",\n  \"name\": \"UPA Vila Mariana\",\n  \"address\": {\n    \"street\": \"Rua Domingos de Morais\",\n    \"neighborhood\": \"Vila Mariana\",\n    \"zipCode\": \"04010-100\",\n    \"number\": 123\n  },\n  \"latitude\": -23.5895,\n  \"longitude\": -46.6343,\n  \"active\": true,\n  \"open24h\": true,\n  \"maxCapacity\": 80\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/health-units",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Health Units",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health-units",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Health Unit By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health-units/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Health Unit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unitType\": \"UPA\",\n  \"name\": \"UPA Vila Mariana - Atualizada\",\n  \"address\": {\n    \"street\": \"Rua Domingos de Morais\",\n    \"neighborhood\": \"Vila Mariana\",\n    \"zipCode\": \"04010-100\",\n    \"number\": 123\n  },\n  \"latitude\": -23.5896,\n  \"longitude\": -46.6342,\n  \"active\": true,\n  \"open24h\": true,\n  \"maxCapacity\": 90\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/health-units/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Health Unit",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health-units/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Waiting Time",
+      "item": [
+        {
+          "name": "Create Waiting Time",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) {",
+                  "    pm.collectionVariables.set('waiting_time_id', json.id);",
+                  "  }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"healthUnitId\": \"{{health_unit_id}}\",\n  \"waitingTimeMinutes\": 25,\n  \"waitingPatients\": 12\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/waiting-time",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Waiting Time",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/waiting-time",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Waiting Time By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/waiting-time/{{waiting_time_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "{{waiting_time_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Waiting Time By Health Unit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"healthUnitId\": \"{{health_unit_id}}\",\n  \"waitingTimeMinutes\": 40,\n  \"waitingPatients\": 20\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/waiting-time/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Waiting Time",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/waiting-time/{{waiting_time_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "{{waiting_time_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "health_unit_id",
+      "value": ""
+    },
+    {
+      "key": "waiting_time_id",
+      "value": ""
+    }
+  ]
+}

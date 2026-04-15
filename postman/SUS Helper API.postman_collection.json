@@ -1,0 +1,399 @@
+{
+  "info": {
+    "_postman_id": "4ef07141-c187-440b-881c-c8756bfdc8d9",
+    "name": "SUS Helper API",
+    "description": "Collection para testar o CRUD de Health Units e Waiting Time.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "22746679",
+    "_collection_link": "https://go.postman.co/collection/22746679-4ef07141-c187-440b-881c-c8756bfdc8d9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Health Units",
+      "item": [
+        {
+          "name": "Create Health Unit",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) {",
+                  "    pm.collectionVariables.set('health_unit_id', json.id);",
+                  "  }",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unitType\": \"UPA\",\n  \"name\": \"UPA Vila do remo\",\n  \"address\": {\n    \"street\": \"Rua remador\",\n    \"neighborhood\": \"Vila do remo\",\n    \"zipCode\": \"04010-100\",\n    \"number\": 123\n  },\n  \"latitude\": -23.5895,\n  \"longitude\": -46.6343,\n  \"active\": true,\n  \"open24h\": true,\n  \"maxCapacity\": 80\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/health-units",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Health Units",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health-units",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Health Unit By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health-units/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Health Unit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unitType\": \"UPA\",\n  \"name\": \"UPA Vila Mariana - Atualizada\",\n  \"address\": {\n    \"street\": \"Rua Domingos de Morais\",\n    \"neighborhood\": \"Vila Mariana\",\n    \"zipCode\": \"04010-100\",\n    \"number\": 123\n  },\n  \"latitude\": -23.5896,\n  \"longitude\": -46.6342,\n  \"active\": true,\n  \"open24h\": true,\n  \"maxCapacity\": 90\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/health-units/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Health Unit",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health-units/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get health by locate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health-units/best-by-user-location?userLocation=Rua aristodemo gazzotti 738",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "best-by-user-location"
+              ],
+              "query": [
+                {
+                  "key": "userLocation",
+                  "value": "Rua aristodemo gazzotti 738"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get travel time",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/health-units/travel?origin=Rua aristodemo gazzotti 738&destination=Estrada de Itapecirica da Serra, 1661 - Vila Maracana&healthUnitName=Hospital Municipal Dr Fernando Mauro Pires da Rocha (Campo Limpo)",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health-units",
+                "travel"
+              ],
+              "query": [
+                {
+                  "key": "origin",
+                  "value": "Rua aristodemo gazzotti 738"
+                },
+                {
+                  "key": "destination",
+                  "value": "Estrada de Itapecirica da Serra, 1661 - Vila Maracana"
+                },
+                {
+                  "key": "healthUnitName",
+                  "value": "Hospital Municipal Dr Fernando Mauro Pires da Rocha (Campo Limpo)"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Waiting Time",
+      "item": [
+        {
+          "name": "Create Waiting Time",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) {",
+                  "    pm.collectionVariables.set('waiting_time_id', json.id);",
+                  "  }",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"waitingTimeMinutes\": 35,\n  \"bluePatients\": 8,\n  \"greenPatients\": 12,\n  \"yellowPatients\": 6,\n  \"redPatients\": 2,\n  \"blueWaitingTime\": 20,\n  \"greenWaitingTime\": 35,\n  \"yellowWaitingTime\": 50,\n  \"redWaitingTime\": 5\n}\n"
+            },
+            "url": {
+              "raw": "{{base_url}}/waiting-time/b7aa627a-32af-48d3-890f-f9e76f55ca2b",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "b7aa627a-32af-48d3-890f-f9e76f55ca2b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Waiting Time",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/waiting-time",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Waiting Time By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/waiting-time/{{waiting_time_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "{{waiting_time_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Waiting Time By Health Unit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"waitingTimeMinutes\": 36,\n  \"bluePatients\": 9,\n  \"greenPatients\": 11,\n  \"yellowPatients\": 5,\n  \"redPatients\": 1,\n  \"blueWaitingTime\": 24,\n  \"greenWaitingTime\": 30,\n  \"yellowWaitingTime\": 40,\n  \"redWaitingTime\": 3\n}\n"
+            },
+            "url": {
+              "raw": "{{base_url}}/waiting-time/{{health_unit_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "{{health_unit_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Waiting Time",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/waiting-time/{{waiting_time_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "{{waiting_time_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find by unit ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/waiting-time/unit-id/00000000-0000-0000-0000-000000000314",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "waiting-time",
+                "unit-id",
+                "00000000-0000-0000-0000-000000000314"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AI",
+      "item": [
+        {
+          "name": "Ai request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "Endereço: Rua alexandre benois, vila andrade\r\n Problema: Cai de moto e acho que quebrei o braço",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/assistant",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "assistant"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "health_unit_id",
+      "value": ""
+    },
+    {
+      "key": "waiting_time_id",
+      "value": ""
+    }
+  ]
+}
